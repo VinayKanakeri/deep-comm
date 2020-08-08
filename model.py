@@ -6,7 +6,7 @@ import math
 
 def deep_ofdm_model(input_shape=(256,), output_size=16, reg=0.0):
     
-    model_input = keras.Input(shape=input_shape, name = 'Received signal')
+    model_input = keras.Input(shape=input_shape, name = 'Received_signal')
     ofdm_net = layers.Dense(500, kernel_regularizer=tf.keras.regularizers.l2(reg))(model_input)
     ofdm_net = layers.Activation('relu')(ofdm_net)
     ofdm_net = layers.Dense(250, kernel_regularizer=tf.keras.regularizers.l2(reg))(ofdm_net)
@@ -20,5 +20,5 @@ def deep_ofdm_model(input_shape=(256,), output_size=16, reg=0.0):
 
     return model
 
-    
+
 
