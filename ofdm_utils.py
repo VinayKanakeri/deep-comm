@@ -18,6 +18,15 @@ def bitarray2dec(in_bitarray):
 
     return number
 
+def dec2bitarray(in_number, bit_width):
+    
+    if isinstance(in_number, (np.integer, int)):
+        return decimal2bitarray(in_number, bit_width).copy()
+    result = np.zeros(bit_width * len(in_number), np.int8)
+    for pox, number in enumerate(in_number):
+        result[pox * bit_width:(pox + 1) * bit_width] = decimal2bitarray(number, bit_width).copy()
+    return result
+
 def decimal2bitarray(number, bit_width):
 
     result = np.zeros(bit_width, np.int8)

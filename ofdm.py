@@ -20,7 +20,6 @@ def ofdm_tx(x, nfft, nsc, cp_length):
         ofdm_sym_time = ifft(ofdm_sym_freq)
         cp = ofdm_sym_time[-int(cp_length):]
         ofdm_tx_signal = np.concatenate((ofdm_tx_signal, cp, ofdm_sym_time))
-
     return ofdm_tx_signal
 
 
