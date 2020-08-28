@@ -34,10 +34,14 @@ def data_generator(train=0,val=0,test=0):
             # remove the CP
             received_td = np.zeros(input_symbols.shape)
             received_td = received_time_domain[CP:,:]
+            received_td = received_td.T
+            x = np.reshape(np.real(received_td.flatten()), (-1,1))
+            y = np.reshape(np.imag(received_td.flatten()),(-1,1))
+            b = np.concatenate((x,y),axis=1).flatten()
 
             # Collect the training data
             training_bits.append(msg_bits)
-            training_received_symbols.append(received_td)
+            training_received_symbols.append(b)
     if(train==1):
         print("Train data length is %d bits" %np.size(training_bits))
     if(val==1):
