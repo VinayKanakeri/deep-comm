@@ -20,7 +20,7 @@ nSym_pil = ceil(nSym/5);               % Number of pilots, inserting it in every
 dat_pil = randi([0 M-1], numDataCarr,nSym);      % data symbols
 
 for i=1:nSym_pil
-    dat_pil(:,i+5*(i-1)) = ones(1,numPilotCarr); % Inserting pilot symbols
+    dat_pil(:,i+(5*(i-1))) = ones(1,numPilotCarr); % Inserting pilot symbols
 end
 
 dat_pil_mod = qammod(dat_pil,M);                 % QAM modulation of the data and pilot symbols
