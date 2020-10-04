@@ -1,5 +1,12 @@
 function [H_data_pred,H_actual] = trainingDataLabels_freq(nSym,nCarr,cp_len,n_tx,nSubFrame,SNR,Np)
-
+% This function generates the 4D output of labels and data for the 
+%channel estimation in frequency domain. It takes in the input as :
+% nSym : Number of symbols in each subframe
+% nCarr : Number of carriers in each subframe
+% cp_len : Cyclic Prefix length for the OFDM config
+% n_tx : Number of transmitting antennaes
+% nSubFrame : Number of subframes / examples
+% SNR : To generate the noise power
 channel_train = load('channel_train.mat'); % Loading the channel training data
 
 % Allocating memory to the full training label structure
