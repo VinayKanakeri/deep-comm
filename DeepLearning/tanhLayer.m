@@ -2,7 +2,7 @@
     methods
         function layer = tanhLayer(name) 
             % Set layer name
-            if nargin == 2
+            if nargin == 1
                 layer.Name = name;
             end
             % Set layer description
