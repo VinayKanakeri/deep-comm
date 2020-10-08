@@ -21,3 +21,11 @@ systems consiting of a single relay.
 ### DeepLearning :
 
 MATLAB deeplearning implementation.
+
+### channel_test.zip and channel_train.zip :
+
+These contain the values for the testing and training data for our deep learning models for the channel. Each file contains an numpy array stored as an
+object which needs to loaded onto the variable of use. The numpy array has a dimension of $Tx16$ where the rows inidcate the evolution of the 16
+taps across time. 
+
+Note : This is the time domain complex values of the channel obtained through the WINNER 2 channel model. 
