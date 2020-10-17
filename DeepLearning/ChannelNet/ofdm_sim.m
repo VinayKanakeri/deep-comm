@@ -20,10 +20,9 @@ for i=1:nFrames
     end
     ofdm_waveform_rx(i,:,:) = reshape(ofdm_wave_rx(i,:,:,:),[(nCarr+cp_len)*nSym,1]);
     rx_frame(i,:,:) = ofdm_demod(shiftdim(ofdm_waveform_rx(i,:,:),1));
-    H_est_mat(i,:,:) = LSest(rx_frame(i,:,:),tx_frame(i,:,:));
+    H_est_mat(i,:,:) = LSest(squeeze(rx_frame(i,:,:)),squeeze(tx_frame(i,:,:)));
     
 end
-
 H_actual = fft(channel_matrix,nCarr,2);
 
 
