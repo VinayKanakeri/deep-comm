@@ -1,6 +1,6 @@
 function [train_data,train_label] = trainingData(nCarr,cp_len,n_tx,p_flag,nSamples,pilot_idx,SNR)
 
-M=4;
+M=2;
 nSym = 1;
 [ofdm_mod,ofdm_demod]= OFDMConfig(nCarr,cp_len,nSym,n_tx,p_flag,pilot_idx);
 [~,h_coeff] = WinnerResponse(nSamples);
