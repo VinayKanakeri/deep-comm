@@ -1,5 +1,12 @@
 
-function [ofdm_mod,ofdm_demod] = OFDMConfig(nCarr,cp_len,nSym,n_tx)
+function [ofdm_mod,ofdm_demod] = OFDMConfig(nCarr,cp_len,nSym,n_tx,p_flag,pilot_idx)
+% OFDMConfig: Configures the OFDM object
+% nCarr : Number of carrier
+% cp_len : Length of Cyclic Prefix
+% nSym : Number of OFDM synbols (not data symbols == nCarr)
+% n_tx : Number of transmitting antennaes
+% p_flag : Are we providing pilots seperatley if so p_flag=1;
+% pilot_idx : Pilot sub carrier index in each OFDM synbol 
 
 nfft = nCarr; % Number of subcarriers
 %cp_len = 16; % Length of CP
@@ -17,9 +24,9 @@ gaurdCarr = 0; % Number of gaurd carriers above and below
 ofdm_mod = comm.OFDMModulator; % Modulation Object
 
 ofdm_mod.FFTLength = nfft;
-ofdm_mod.PilotInputPort = 0; % We are providing the pilots with the data so this is made false
+ofdm_mod.PilotInputPort = p_flag; % We are providing the pilots with the data so this is made false
 
-%ofdm_mod.PilotCarrierIndices=pilot_idx % Need to provide pilot subcarrier index
+ofdm_mod.PilotCarrierIndices=pilot_idx; % Need to provide pilot subcarrier index
 %across all symbols size is (numPilotcarrxnSymxNumTransmitAntennas)
 
 ofdm_mod.CyclicPrefixLength = cp_len;
@@ -31,9 +38,9 @@ ofdm_mod.NumGuardBandCarriers=[gaurdCarr;gaurdCarr];
 ofdm_demod = comm.OFDMDemodulator; % Demodulation object
 
 ofdm_demod.FFTLength = nfft;
-ofdm_demod.PilotOutputPort = 0; % We are proving the pilots with the data so this is made false
+ofdm_demod.PilotOutputPort = p_flag; % We are proving the pilots with the data so this is made false
 
-%ofdm_demod.PilotCarrierIndices=pilot_idx % Need to provide pilot subcarrier index
+ofdm_demod.PilotCarrierIndices=pilot_idx; % Need to provide pilot subcarrier index
 %across all symbols size is (numPilotcarrxnSymxNumTransmitAntennas)
 
 ofdm_demod.CyclicPrefixLength = cp_len;
