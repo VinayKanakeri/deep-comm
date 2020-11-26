@@ -1,4 +1,4 @@
-
+function [trainData] = MIMODataset()
 options = struct();
 options.numSubCarr = 4;
 options.nPilotSymbols = [4];
@@ -45,4 +45,5 @@ for i = 1:options.p_num
         trainData{i}{j,1} = dataOut(:,:,:,1);
         trainData{i}{j,2} = dataset_shuf(1:options.ch(j),:,:,1)+ 1i*dataset_shuf(1:options.ch(j),:,:,2);
     end
+end
 end
