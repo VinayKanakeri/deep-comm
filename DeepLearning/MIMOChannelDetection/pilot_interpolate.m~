@@ -1,0 +1,13 @@
+function [H_interp] = pilot_interpolate(H,pilot_columns,Nuser,Ncarr)
+temp1 = 2*pilot_columns - 1;
+temp2 = temp1 + 1;
+
+x = pilot_columns;
+y = 1:Nuser;
+[X,Y] = meshgrid(x,y);
+H_pilots = 
+x_2d = 1:Ncarr;
+y_2d = 1:Nuser;
+[X_2d,Y_2d] = meshgrid(x_2d,y_2d);
+H_interp = interp2(X,Y,H(:,pilot_columns),X_2d,Y_2d,'spline');
+end
