@@ -6,12 +6,12 @@ function [cfgWim,cfgLayout] = Winner2ChannelModelConfig(nSamples)
 AA(1) = winner2.AntennaArray('Pos',[0,0,0]); % SISO System
 
 %MIMO System
-%AA(1) = winner2.AntennaArray('UCA',16,0.15); % BS multi antennae structure
+AA(2) = winner2.AntennaArray('UCA',16,0.15); % BS multi antennae structure
 %AA(2) = winner2.AntennaArray('UCA',4,0.05); % Multi(N) Antennae System
 
 %2. Create the base and mobile station and assign the AA type to each
 
-BSId = {1}; % Only one base station which is single element
+BSId = {2}; % Only one base station which is single element
 MSId = [1]; % One one mobile station which also has single element
 
 %2.1 Define the number of links between the BS and MS
