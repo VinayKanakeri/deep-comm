@@ -21,7 +21,7 @@ def mimo_model(input_shape=(5,128,1)):
     initializer = tf.keras.initializers.GlorotNormal()
     input = Input(shape=input_shape, name = 'Input')
 
-    c1 = Conv2D(64, (9,9), activation = 'relu', kernel_initializer=initializer, padding='same')(input)
+    c1 = Conv2D(64, (2,2), activation = 'relu', kernel_initializer=initializer, padding='same')(input)
     c2 = Conv2D( 32 , (1,1), activation = 'relu', kernel_initializer=initializer, padding='same')(c1)
     c3 = Conv2D(1, (5,5), kernel_initializer=initializer, padding='same')(c2)
 
@@ -45,11 +45,11 @@ def mimo_model(input_shape=(5,128,1)):
     return model
 
 def train(train_data,train_label,val_data,val_label,Nuser,Ncarr):
-    mimo_model = mimo_model((Nuser,Ncarr,1))
+    model = mimo_model((Nuser,Ncarr,1))
 
     checkpoint = ModelCheckpoint("mimo_check.h5", monitor='val_loss', verbose=1, save_best_only=True,
                                  save_weights_only=False, mode='min')
     callbacks_list = [checkpoint]   
-    mimo_model.fit(train_data, train_label, batch_size=128, validation_data=(val_data, val_label),
+    model.fit(train_data, train_label, batch_size=128, validation_data=(val_data, val_label),
                   callbacks=callbacks_list, shuffle=True, epochs= 200 , verbose=0)
-    mimo_model.save_weights("mimo_.h5")
+    model.save_weights("mimo_.h5")
