@@ -20,18 +20,19 @@ for i= pilot_columns
     Tx_col = Tx_mat(:,i);
     Rx_pilot = Rx_col(pilot_index(:,i)==1);
     Tx_pilot = Tx_col(pilot_index(:,i)==1);
+    PL = find(pilot_index(:,i)==1);
     % LS estimation
-    Hls= Rx_pilots./Tx_pilots;
+    Hls= Rx_pilot./Tx_pilot;
     % MMSE Channel Estimation
-    R_HH = H(:,i)*H(:,i)';%toeplitz(H); 
-    XX = toeplitz(Tx_pilots);     
-    powerDB = 10*log10(var(Rx_pilots)); % Calculate Tx signal power
+    R_HH = H((pilot_index(:,i)==1),i)*H((pilot_index(:,i)==1),i)';%toeplitz(H); 
+    XX = toeplitz(Tx_pilot);     
+    powerDB = 10*log10(var(Rx_pilot)); % Calculate Tx signal power
     sigmI = 10.^(0.1*(powerDB)); % Calculate the noise variance
     G=(R_HH)*(R_HH + (1/sigmI)*(XX))^(-1);
     Hmmse=((G)*(Hls));
     
     % 1D interpolation for columns
-    Hls_i=interp1(PL,Hls,1:Ncarr,'spline');
+    Hls_i = interp1(PL,Hls,1:Ncarr,'spline');
     Hmmse_i = interp1(PL,Hmmse,1:Ncarr,'spline');
     
     Hls_2d = [Hls_2d Hls_i];
