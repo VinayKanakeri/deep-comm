@@ -36,8 +36,16 @@ train_data_1, train_label_1 = train_image[7][:,:,0:70000] , train_label[7][:,:,0
 val_data_1, val_label_1 = train_image[7][:,:,70001:72500] , train_label[7][:,:,70001:72500]
 Nant = len(train_data_1[:,0,0])
 Ncarr = len(train_data_1[0,:,0])
+train_data_1 = np.moveaxis(train_data_1,2,0)[..., np.newaxis]
+train_label_1 = np.moveaxis(train_label_1,2,0)[..., np.newaxis]
+val_data_1 = np.moveaxis(val_data_1,2,0)[..., np.newaxis]
+val_label_1 = np.moveaxis(val_label_1,2,0)[..., np.newaxis]
+
+print(train_data_1.shape)
+
 train(train_data_1 ,train_label_1, val_data_1 , val_label_1,Nant,Ncarr)
 
 
 train_pred = predict(train_data_1,Nant,Ncarr)
 val_pred = predict(val_data_1,Nant,Ncarr)
+
