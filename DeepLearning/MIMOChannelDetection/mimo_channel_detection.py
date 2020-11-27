@@ -9,9 +9,9 @@ from model import mimo_model, train, predict
 from scipy.io import loadmat
 import matplotlib.pyplot as plt
 
-train_data = mat73.loadmat('MIMOChannelDetection/dataset_big.mat')
-x = train_data['dataset']
-y = (x[0][0])
+train_data = mat73.loadmat('datset_big.mat')
+y = np.squeeze(np.array(train_data['dataset']))
+#y = (x[0][0])
 #print(y[1][1].shape)
 train_image = []
 train_label = []
