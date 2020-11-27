@@ -44,12 +44,18 @@ def mimo_model(input_shape=(5,128,1)):
     #model.summary()
     return model
 
-def train(train_data,train_label,val_data,val_label,Nuser,Ncarr):
-    model = mimo_model((Nuser,Ncarr,1))
+def train(train_data,train_label,val_data,val_label,Nant,Ncarr):
+    model = mimo_model((Nant,Ncarr,1))
 
     checkpoint = ModelCheckpoint("mimo_check.h5", monitor='val_loss', verbose=1, save_best_only=True,
                                  save_weights_only=False, mode='min')
     callbacks_list = [checkpoint]   
     model.fit(train_data, train_label, batch_size=128, validation_data=(val_data, val_label),
                   callbacks=callbacks_list, shuffle=True, epochs= 200 , verbose=0)
-    model.save_weights("mimo_.h5")
+    model.save_weights("mimo_"+str(Nant)+".h5")
+
+def predict(input_data, Nant, Ncarr):
+    model = mimo_model((Nant,Ncarr,1))
+    model.load_weights("mimo_" + str(Nant)+".h5")
+    predicted  = model.predict(input_data)
+    return predicted
