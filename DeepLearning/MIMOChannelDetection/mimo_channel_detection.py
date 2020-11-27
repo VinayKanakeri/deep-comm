@@ -1,15 +1,16 @@
 import numpy as np
 import math
 from numpy.lib.function_base import append
+import mat73
 
 from tensorflow.python.keras.backend import concatenate, shape, zeros
-from model import mimo_model, train
+from model import mimo_model, train, predict
 #from scipy.misc import imresize
 from scipy.io import loadmat
 import matplotlib.pyplot as plt
 
-train_data = loadmat('MIMOChannelDetection/dataset.mat')
-x = train_data['trainData']
+train_data = mat73.loadmat('MIMOChannelDetection/dataset_big.mat')
+x = train_data['dataset']
 y = (x[0][0])
 #print(y[1][1].shape)
 train_image = []
@@ -18,7 +19,7 @@ train_label = []
 
 for i in range(12):
     temp3 = np.empty([len(y[i][0][:,0,0]),0,len(y[i][0][0,0,:])])
-    temp4 = np.empty([len(y[i][0][:,0,0]),0,len(y[i][0][0,0,:])])
+    temp4 = np.empty([len(y[i][1][:,0,0]),0,len(y[i][1][0,0,:])])
     for j in range(4):
         temp = np.stack((np.real(y[i][0][:,j,:]), np.imag(y[i][0][:,j,:])),axis = 2)
         temp = np.moveaxis(temp, 2, 1)
@@ -30,10 +31,13 @@ for i in range(12):
     train_label.append(temp4)
 
 
-
-
-
 #idx_random = np.random.rand(len(train_image[7][1][1])) < (1/9)  # uses 32000 from 36000 as training and the rest as validation
-train_data_1, train_label_1 = train_image[7][:,:,0:1500] , train_label[7][:,:,0:1500]
-val_data_1, val_label_1 = train_image[7][:,:,1500:1800] , train_label[7][:,:,1500:1800]
-train(train_data_1 ,train_label_1, val_data_1 , val_label_1,20,8)
+train_data_1, train_label_1 = train_image[7][:,:,0:70000] , train_label[7][:,:,0:70000]
+val_data_1, val_label_1 = train_image[7][:,:,70001:72500] , train_label[7][:,:,70001:72500]
+Nant = len(train_data_1[:,0,0])
+Ncarr = len(train_data_1[0,:,0])
+train(train_data_1 ,train_label_1, val_data_1 , val_label_1,Nant,Ncarr)
+
+
+train_pred = predict(train_data_1,Nant,Ncarr)
+val_pred = predict(val_data_1,Nant,Ncarr)

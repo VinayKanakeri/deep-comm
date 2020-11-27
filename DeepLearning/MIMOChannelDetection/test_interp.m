@@ -6,7 +6,7 @@ for i=1:Ncarr
     temp = [real(DeepMIMO_dataset{1,1}.user{1,100}.channel(:,i)) imag(DeepMIMO_dataset{1,1}.user{1,1}.channel(:,i))];
     z = [z temp];
 end
-pilot_columns = 1:6:Ncarr;
+pilot_columns = 1:3:Ncarr;
 H_interp = pilot_interpolate(z,pilot_columns,Nuser,Ncarr);
 
 %z = [real(DeepMIMO_dataset{1,1}.user{1,100}.channel) imag(DeepMIMO_dataset{1,1}.user{1,1}.channel)];
