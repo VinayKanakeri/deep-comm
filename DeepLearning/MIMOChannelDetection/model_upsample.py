@@ -24,7 +24,7 @@ def mimo_model(input_shape=(5,128,1)):
     c1 = Conv2D(64, (2,2), activation = 'relu', kernel_initializer=initializer, padding='same')(input)
     c2 = Conv2D( 32 , (1,1), activation = 'relu', kernel_initializer=initializer, padding='same')(c1)
     c3 = Conv2D(1, (5,5), kernel_initializer=initializer, padding='same')(c2)
-    c4 = Conv2DTranspose(1,(5,5),kernel_initializer=initializer,stride = (1,1),padding =(2,1),output_padding=(0,14-input_shape[1]))(upSample)
+    c4 = Conv2DTranspose(1,(5,5),kernel_initializer=initializer,stride = (1,1),padding =(2,1),output_padding=(0,22)(upSample)
 
     #DnCNN
 
