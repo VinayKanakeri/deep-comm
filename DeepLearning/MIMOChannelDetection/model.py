@@ -51,7 +51,7 @@ def train(train_data,train_label,val_data,val_label,Nant,Ncarr):
                                  save_weights_only=False, mode='min')
     callbacks_list = [checkpoint]   
     model.fit(train_data, train_label, batch_size=128, validation_data=(val_data, val_label),
-                  callbacks=callbacks_list, shuffle=True, epochs= 200 , verbose=0)
+                  callbacks=callbacks_list, shuffle=True, epochs= 100 , verbose=0)
     model.save_weights("mimo_"+str(Nant)+".h5")
 
 def predict(input_data, Nant, Ncarr):
