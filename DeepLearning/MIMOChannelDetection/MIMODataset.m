@@ -1,7 +1,7 @@
 function [trainData] = MIMODataset()
 options = struct();
-options.numSubCarr = 64;
-options.pilot_col = 1:6:64;
+options.numSubCarr = 16;
+options.pilot_col = 1:4:16;
 options.nPilotSymbols = length(options.pilot_col) ;
 
 options.p_num = size(options.nPilotSymbols,2);
