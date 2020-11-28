@@ -1,7 +1,9 @@
 function [trainData] = MIMODataset()
 options = struct();
-options.numSubCarr = 4;
-options.nPilotSymbols = [4];
+options.numSubCarr = 64;
+options.pilot_col = 1:6:64;
+options.nPilotSymbols = length(options.pilot_col) ;
+
 options.p_num = size(options.nPilotSymbols,2);
 options.bandWidth = 0.01; % unit: GHz
 options.SNR_dB = 10; % unit: dB
@@ -11,7 +13,7 @@ options.ch = [2 3 4 5 6 7 10 20 30 50 70 100]; % Antenna numbers at BS
 for i = 1:length(options.ch)
     options.antDimCodebook(i,:) = [1, options.ch(i), 1]; % setting patterns
 end
-options.pilot = uniformPilotsGen(options.numSubCarr);
+options.pilot = uniformPilotsGen(length(options.pilot_col));
 
 % Generating shuffled the channels h and locations
 dataset = DeepMIMOReadData(100,options);
@@ -30,9 +32,9 @@ end
 for i = 1:options.p_num
     pilotSig = options.pilot{i};
     for j = 1:length(options.ch)
-        dataOut = zeros([options.ch(j),options.numSubCarr,options.numOfSamples,1]);
+        dataOut = zeros([options.ch(j),length(options.pilot_col),options.numOfSamples,1]);
         for k=1:options.numOfSamples
-            h = dataset_shuf(1:options.ch(j),:,k,1)+ 1i*dataset_shuf(1:options.ch(j),:,k,2);
+            h = dataset_shuf(1:options.ch(j),options.pilot_col,k,1); % + 1i*dataset_shuf(1:options.ch(j),pilot_col,k,2);
             Pr_avg = norm(abs(h))^2;
             SNR_dB = options.SNR_dB;
             SNR    = 10^(.1*SNR_dB);
@@ -43,7 +45,7 @@ for i = 1:options.p_num
             dataOut(:,:,k,1) = rec;
         end
         trainData{i}{j,1} = dataOut(:,:,:,1);
-        trainData{i}{j,2} = dataset_shuf(1:options.ch(j),:,:,1)+ 1i*dataset_shuf(1:options.ch(j),:,:,2);
+        trainData{i}{j,2} = dataset_shuf(1:options.ch(j),:,:,1); %+ 1i*dataset_shuf(1:options.ch(j),:,:,2);
     end
 end
 end
