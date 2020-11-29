@@ -64,7 +64,8 @@ layers = [ ...
     ];
 
 add = additionLayer(2,'Name','add_1');
-reglayer = nmseReg('output');
+%reglayer = nmseReg('output');
+reglayer = regressionLayer('Name','output');
 lgraph = layerGraph;
 lgraph = addLayers(lgraph,layers);
 lgraph = addLayers(lgraph,add);
